@@ -1,66 +1,93 @@
 package Daniel.Entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
-@Entity // <-- Mi indica che questa classe dovrà essere mappata ad una tabella del db
-@Table(name = "students") // <-- Consente di specificare il nome della tabella (Non è obbligatorio)
-public class Student {
-    @Id // <-- Indica che sarà chiave primaria (obbligatorio)
-    @GeneratedValue // Si usa se si vuol fare gestire gli id al database
-    // Altrimenti devo inserirli io manualmente ogni volta che inserisco un nuovo Studente
-    private long id; // Se uso un long con @GeneratedValue mi ritroverò ad avere un bigserial come tipo di dato della colonna
+@Entity
+@Table(name = "eventi")
+public class Evento {
+    @Id
+    @GeneratedValue
+    private long id;
 
-    @Column(name = "nome") // <-- Consente di personalizzare il nome della colonna (Non è obbligatorio)
-    private String name;
-    @Column(name = "cognome")
-    private String surname;
-    @Column(name = "tipo")
+    @Column(name = "titolo")
+    private String titolo;
+
+
+    @Column(name = "data_evento")
+    private LocalDate data_evento;
+
+    @Column(name = "descrizione")
+    private String descrizione;
+    @Column(name = "tipo_evento")
     @Enumerated(EnumType.STRING)
-    // Di default gli enum vengono convertiti in numeri interi, se voglio che essi siano invece Stringhe devo usare @Enumerated
-    private StudentType studentType;
+    private tipoEvento tipoEvento;
 
-    public Student() {
-        // Se voglio che JPA sia in grado di leggere dati dal DB e crearmi un oggetto
-        // è obbligatorio avere il costruttore vuoto
+    @Column(name = "numero_massimo_partecipanti")
+    private int participantiMassimi;
+
+    public Evento() {
+
     }
 
-    public Student(String name, String surname, StudentType studentType) {
-        this.name = name;
-        this.surname = surname;
-        this.studentType = studentType;
+    public Evento(String titolo, LocalDate data_evento, String descrizione, Daniel.Entities.tipoEvento tipoEvento, int participantiMassimi) {
+        this.titolo = titolo;
+        this.data_evento = data_evento;
+        this.descrizione = descrizione;
+        this.tipoEvento = tipoEvento;
+        this.participantiMassimi = participantiMassimi;
     }
 
-    public String getName() {
-        return name;
+    public String getTitolo() {
+        return titolo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
-    public String getSurname() {
-        return surname;
+    public LocalDate getData_evento() {
+        return data_evento;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setData_evento(LocalDate data_evento) {
+        this.data_evento = data_evento;
     }
 
-    public StudentType getStudentType() {
-        return studentType;
+    public String getDescrizione() {
+        return descrizione;
     }
 
-    public void setStudentType(StudentType studentType) {
-        this.studentType = studentType;
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public tipoEvento getTipoEvento() {
+        return tipoEvento;
+    }
+
+    public void setTipoEvento(tipoEvento tipoEvento) {
+        this.tipoEvento = tipoEvento;
+    }
+
+    public int getParticipantiMassimi() {
+        return participantiMassimi;
+    }
+
+    public void setParticipantiMassimi(int participantiMassimi) {
+        this.participantiMassimi = participantiMassimi;
     }
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Evento{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", studentType=" + studentType +
+                ", titolo='" + titolo + '\'' +
+                ", data_evento=" + data_evento +
+                ", descrizione='" + descrizione + '\'' +
+                ", tipo_evento=" + tipoEvento +
+                ", participantiMassimi='" + participantiMassimi + '\'' +
                 '}';
     }
 }
